@@ -2,8 +2,23 @@
 #include<string>
 #include<fstream>
 #include<string.h>
+#include<stdio.h>
+#include <iomanip>
+#include "clear"
 using namespace std;
 static long int stuid,staffid;
+
+void halt()
+{
+	cout<<"\n press any charater to continue\n";
+	char a;
+	
+	//getchar();
+	cin>>a;
+	//clear screen;
+	
+}
+
 class student_personal							//student 
 {
 
@@ -28,10 +43,13 @@ cout<<"Enter your Last Name  : "<<endl;
 cin>>last_name;
 cout<<"Enter your Middle Name : "<<endl;
 cin>>middle_name;
+fflush(stdin);
 cout<<"Enter your Father Name : "<<endl;
 cin.getline(father_name,30);
+fflush(stdin);
 cout<<"Enter your Mother Name : "<<endl;
 cin.getline(mother_name,30);
+fflush(stdin);
 cout<<"Enter your Address : "<<endl;
 cin.getline(address,50);
 cout<<"Enter your Gender : "<<endl;
@@ -88,7 +106,7 @@ long int  getid()
 	{
 		this->valid=valid;
 		
-		cout<<"removing student  "<<" ....."<<endl;
+		//cout<<"removing student  "<<" ....."<<endl;
 	}
 	bool getvalid()
 	{
@@ -153,11 +171,12 @@ cout<<"ID :"<<id<<endl<<endl;
 void view_marks()
 {
 cout<<"\nThe Marks of the student in the 5 subjects are "<<endl<<endl;
-cout<<"Data Structures And Algorithms : "<<mark.DSA<<endl;
-cout<<"Object Oriented Programming : "<<mark.OOP<<endl;
-cout<<"Discrete Mathematics : "<<mark.DM<<endl;
-cout<<"Computer Organization And Architecture : "<<mark.COA<<endl;
-cout<<"Digital Electronics And Logic Design : "<<mark.DELD<<endl<<endl;
+cout<<" ";
+cout<<"\t\t   Data Structures  And Algorithms : "<<std::setfill (' ') <<mark.DSA<<std::setw (50)<<endl;
+cout<<"Object Oriented Programming"<<" : "<<std::setfill (' ') <<mark.OOP<<std::setw (50)<<endl;
+cout<<"Discrete Mathematics"<<" : "<<std::setfill (' ') <<mark.DM<<std::setw (50)<<endl;
+cout<<"Computer Organization And Architecture"<<" : "<<std::setfill (' ') <<mark.COA<<std::setw (50)<<endl;
+cout<<"Digital Electronics And Logic Design"<<" : "<<std::setfill (' ') <<mark.DELD<<endl<<std::setw (50)<<endl;
 }
 void remove()
 {
@@ -169,11 +188,11 @@ void remove()
 void view_attendance()
 {
 cout<<"\nThe Attendance of the student in the 5 subjects are "<<endl<<endl;
-cout<<"Data Structures And Algorithms : "<<att.DSA<<endl;
-cout<<"Object Oriented Programming : "<<att.OOP<<endl;
-cout<<"Discrete Mathematics : "<<att.DM<<endl;
-cout<<"Computer Organization And Architecture : "<<att.COA<<endl;
-cout<<"Digital Electronics And Logic Design : "<<att.DELD<<endl<<endl;
+cout<<" \t\t Data Structures And Algorithms : "<<std::setfill (' ') <<att.DSA<<std::setw (50)<<endl;
+cout<<"Object Oriented Programming : "<<std::setfill (' ') <<att.OOP<<std::setw (50)<<endl;
+cout<<"Discrete Mathematics : "<<std::setfill (' ') <<att.DM<<std::setw (50)<<endl;
+cout<<"Computer Organization And Architecture : "<<std::setfill (' ') <<att.COA<<std::setw (50)<<endl;
+cout<<"Digital Electronics And Logic Design : "<<std::setfill (' ') <<att.DELD<<std::setw (50)<<endl<<endl;
 }
 
 //friend class staff;
@@ -224,8 +243,10 @@ class staff										//staff
 		cin>>dob;
 		cout<<"Enter Gender (m/f) = ";
 		cin>>gender;
+		fflush(stdin);
 		cout<<"Enter current address = ";
 		cin.getline(address,50);
+		fflush(stdin);
 		cout<<"Enter contact number = ";
 		cin>>pno;
 		int v,i=0;
@@ -246,7 +267,7 @@ class staff										//staff
 		}while(v!=0);
 		n=i;
 		cout<<"Subject opted for teaching (DSA/OOP/COA/DM/DELD) = ";
-		cin>>sub;	
+		cin>>sub;	//subject
 		cout<<"Enter an appropriate password for the profile";
 		cin>>password;
 		}
@@ -254,8 +275,8 @@ class staff										//staff
 		
 		void disp()
 	{
-		cout<<"\n\nYOUR PROFILE DETAILS ARE \n\n";
-		cout<<"Your ID = "<<d1;
+		cout<<"\n\n  PROFILE DETAILS ARE \n\n";
+		cout<<"  ID = "<<d1;
 		cout<<"\nName = "<<fname<<" "<<mname<<" "<<lname;
 		cout<<"\nFather's/Husband's name  = "<<mname;
 		cout<<"\nMother's name = "<<moname;
@@ -280,6 +301,7 @@ class staff										//staff
 		cout<<"\nFor entering marks enter id of student = ";
 		cin>>id1;
 		fstream f("student.dat",ios::in|ios::out|ios::binary);//dont use append
+		try{
 		while(id<stuid)
 		{
 			f.read((char*)&s1, sizeof(s1));
@@ -287,13 +309,35 @@ class staff										//staff
 						
 			if(id1==id)
 			{
-				int i1;
-				cout<<"\n1 : DSA";
+				throw 1;
+				
+				break;
+				
+			}
+         	
+			
+		}
+		                    cout<<"\n Student is not found";
+		
+		}catch(int a)
+		{
+			int i1;
+				/*cout<<"\n1 : DSA";
 				cout<<"\n2 : OOP";
 				cout<<"\n3 : DM";
 				cout<<"\n4 : COA";
 				cout<<"\n5 : DELD\n";
-				cin>>i1;
+				cin>>i1;*/
+				if(strcmp(sub,"DSA")==0)
+					i1=1;
+				else if(strcmp(sub,"OOP")==0)
+					i1=2;
+				else if(strcmp(sub,"DM")==0)
+					i1=3;
+				else if(strcmp(sub,"COA")==0)
+					i1=4;
+				else if(strcmp(sub,"DELD")==0)
+					i1=5;
                             switch(i1)
                             {
 								case 1 : cout<<"\nEnter marks in DSA = ";
@@ -322,11 +366,6 @@ class staff										//staff
 				f.seekp(pos,ios::cur);
 				f.write((char*)&s1,sizeof(s1));
 				
-				break;
-				
-			}
-                        else
-                            cout<<"\n Student not found";
 			
 			
 		}
@@ -343,6 +382,7 @@ class staff										//staff
 		cout<<"\nFor entering attendance enter id of student = ";
 		cin>>id1;
 		fstream f("student.dat",ios::in|ios::out|ios::binary);//dont use append
+		try{
 		while(id<stuid)
 		{
 			f.read((char*)&s2, sizeof(s2));
@@ -350,15 +390,38 @@ class staff										//staff
 						
 			if(id1==id)
 			{
-				int i2;
-				cout<<"\n1 : DSA";
+				throw 1;
+				
+				break;
+				
+			}
+        	
+			
+		}
+		                    cout<<"\n Student not found";
+		
+		}
+		catch(int a)
+		{
+			int i1;
+				/*cout<<"\n1 : DSA";
 				cout<<"\n2 : OOP";
 				cout<<"\n3 : DM";
 				cout<<"\n4 : COA";
 				cout<<"\n5 : DELD\n";
-				cin>>i2;
+				cin>>i2;*/
+				if(strcmp(sub,"DSA")==0)
+					i1=1;
+				else if(strcmp(sub,"OOP")==0)
+					i1=2;
+				else if(strcmp(sub,"DM")==0)
+					i1=3;
+				else if(strcmp(sub,"COA")==0)
+					i1=4;
+				else if(strcmp(sub,"DELD")==0)
+					i1=5;
 									
-                            switch(i2)
+                            switch(i1)
                             {
 				case 1 : cout<<"\nEnter attendance in DSA = ";
                              cin>>s2.att.DSA;
@@ -385,13 +448,6 @@ class staff										//staff
 				f.seekp(pos,ios::cur);
 				f.write((char*)&s2,sizeof(s2));
 				
-				break;
-				
-			}
-                        else
-                            cout<<"\n Student not found";
-			
-			
 		}
 		f.close();
 		
@@ -496,7 +552,7 @@ class admin
 		s.enter_stud_academic(a,b);
 		s.enter_marks(0,0,0,0,0);
 		s.enter_attendance(0,0,0,0,0);
-
+		s.setvalid(true);
 		ofstream out("student.dat",ios::binary|ios::app);
 		out.write((char*)&s,sizeof(s));
 		out.close();
@@ -524,7 +580,7 @@ class admin
 	{
 		student s;
 		long int id=0;
-		ifstream in("student.dat");
+		ifstream in("student.dat",ios::binary);
 		while(id<stuid)
 		{
 			in.read((char*)&s, sizeof(s));
@@ -544,7 +600,7 @@ class admin
 	{
 		staff s;
 		long int id=0;
-		ifstream in("staff.dat");
+		ifstream in("staff.dat",ios::binary);
 		while(id<staffid)
 		{
 			in.read((char*)&s, sizeof(s));
@@ -693,7 +749,7 @@ void admin_menu()									//admin menu
                     break;
             
             }
-            
+            halt();
             
             }
                else
@@ -717,6 +773,9 @@ void staff_menu()								//staff menu
 	cin>>staid;
 		
 		fstream in("staff.dat",ios::in|ios::out|ios::binary);
+		try 
+		{
+		if(staid<=staffid)
 		while(id<staffid)
 		{
 			in.read((char*)&staff1, sizeof(staff1));
@@ -756,7 +815,10 @@ void staff_menu()								//staff menu
 				}while(sta1!=4);
 				}
 				else
-				cout<<"INCORRECT PASSWORD";
+				{
+				cout<<"INCORRECT PASSWORD OR";
+				throw 1;
+				}
 			//}
 				//f.seekp(pos,ios::cur);
 				//f.write((char*)&s,sizeof(s));
@@ -765,6 +827,14 @@ void staff_menu()								//staff menu
 			}
 			
 			
+		}
+		else
+			throw 1;
+		}
+		catch(int a)
+		{
+		cout<<"STAFF NOT FOUND";
+		
 		}
 		in.close();
 	
@@ -785,6 +855,9 @@ void student_menu()
 	cout<<"\nEnter student ID = ";
 	cin>>studid;
 	fstream	f("student.dat",ios::in|ios::out|ios::binary);
+	
+	try{
+	if(studid<=stuid)
 		while(id1<=stuid)
 		{
 			f.read((char*)&stu1, sizeof(stu1));
@@ -824,7 +897,7 @@ void student_menu()
 				}while(stud1!=4);
 				}
 				else
-				cout<<"INCORRECT PASSWORD";
+				cout<<"INCORRECT PASSWORD OR STUDENT NOT IN CURRENT SEMISTER";
 //			}
 				//f.seekp(pos,ios::cur);
 				//f.write((char*)&s,sizeof(s));
@@ -834,12 +907,45 @@ void student_menu()
 			
 			
 		}
+		else
+			throw 1;
+	}
+	catch(int a)
+	{
+	cout<<"STUDENT NOT IN CURRENT SEMISTER";
+	}	
 		f.close();
 	
 }
 
+void intialize()
+{
+	
+	
+		ifstream in("config.dat");
+		
+		if(in)
+		{
+		long int a,b;
+		char c;
+		
+		in>>a>>c>>b;
+		stuid=a;
+		staffid=b;
+		in.close();	
+		}
+		else{
+			in.close();	
+			stuid=0;
+			staffid=0;
+		}
+		
+}
+
 int main()
 {
+	
+	intialize();
  	int ch1;
     do{
     cout<<"\n    MENU";
