@@ -4,7 +4,7 @@
 #include<string.h>
 #include<stdio.h>
 #include <iomanip>
-#include "clear"
+//#include "clear"
 using namespace std;
 static long int stuid,staffid;
 
